@@ -42,7 +42,6 @@ def process(turn):
             if push!=0:
                 hp[enemyturn-1] -= push
                 print(str(players[turn-1])+' is attacking the enemy with a power of '+str(push)+'. An enemy has '+ str(hp[enemyturn-1]) + ' hp left.')
-                
                 if turn % 2 == 0:
                     turn -= 1
                 else:
