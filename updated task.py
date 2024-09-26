@@ -92,10 +92,10 @@ def process(turn):
                 else:
                     turn += 1    
         if hp[turn - 1]<= 0:
-            print('What a game! '+ str(players[enemyturn - 1])+ ' wins!')
+            print('What a game! '+ str(players[enemyturn - 1])+ ' loses!')
             playing = False
         elif hp[enemyturn - 1] <= 0:
-            print('What a game! '+ str(players[turn - 1])+ ' wins!')
+            print('What a game! '+ str(players[turn - 1])+ ' loses!')
             playing = False
 process(1)
 
