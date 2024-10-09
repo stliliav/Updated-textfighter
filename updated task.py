@@ -1,5 +1,4 @@
 import random
-finish = False
 print('Hello, player! Select a game mode:')
 print('1 - two players')
 print('2 - an easy game with a computer')
