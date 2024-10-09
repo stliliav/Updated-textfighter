@@ -97,6 +97,3 @@ def process(turn):
             print('What a game! '+ str(players[turn - 1])+ ' loses!')
             playing = False
 process(1)
-
-
-
