@@ -45,6 +45,12 @@ def computer_has_a_strategy(turn):
     push = random.choice(f[e]) 
     return push
 
+def pickforce(turn):
+    phrase = str(players[turn-1]) + ', choose the force to attack! It may be an integer from 1 to 9.\n'
+    pickforce = int(input(phrase))
+    push = random.choice(f[pickforce])
+    return push
+
 def process(turn):
     playing = True
     while playing:
@@ -53,9 +59,7 @@ def process(turn):
         else:
             enemyturn = 2
         if person_is_playing(version, turn):
-            phrase = str(players[turn-1]) + ', choose the force to attack! It may be an integer from 1 to 9.\n'
-            pickforce = int(input(phrase))
-            push = random.choice(f[pickforce])
+            push = pickforce(turn)
             if push!=0:
                 hp[enemyturn-1] -= push
                 print(str(players[turn-1])+' is attacking the enemy with a power of '+str(push)+'. An enemy has '+ str(hp[enemyturn-1]) + ' hp left.')
