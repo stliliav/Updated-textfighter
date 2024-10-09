@@ -16,7 +16,7 @@ else:
     players.append('Computer')
 hp=[50, 50]
 f=[ 
-    [0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
     [1,1,1,1,1,1,1,1,1,1],
     [2,2,2,2,2,2,2,2,2,0],
     [3,3,3,3,3,3,3,3,0,0],
@@ -27,73 +27,62 @@ f=[
     [8,8,8,0,0,0,0,0,0,0],
     [9,9,0,0,0,0,0,0,0,0]
 ]
+def person_is_playing(version, turn):
+    return (version == 1) or (version == 2 and turn == 1) or (version == 3 and turn == 1 )
+
+def computer_is_playing_easily(version, turn):
+    return (version == 2 and turn == 2)
+
+def computer_is_playing_hardly(version, turn):
+    return (version == 3 and turn == 2)
+
+def computer_has_a_strategy(turn):
+    push = 0
+    if hp[turn - 2] > 10:
+        e = random.choice([int(i) for i in range(4,7)])
+    if hp[turn - 2] <= 10:
+        e = random.choice([int(i) for i in range(2,6)])
+    push = random.choice(f[e]) 
+    return push
+
 def process(turn):
     playing = True
     while playing:
-        if turn % 2 == 0:
+        if turn%2==0:
             enemyturn = 1
         else:
             enemyturn = 2
-        if (version == 1) or (version == 2 and turn == 1) or (version == 3 and turn == 1):
-            phrase = str(players[turn - 1]) + ', choose the force to attack! It may be an integer from 1 to 9.\n'
+        if person_is_playing(version, turn):
+            phrase = str(players[turn-1]) + ', choose the force to attack! It may be an integer from 1 to 9.\n'
             pickforce = int(input(phrase))
             push = random.choice(f[pickforce])
             if push!=0:
-                hp[enemyturn - 1] -= push
-                print(str(players[turn - 1])+' is attacking the enemy with a power of '+str(push)+'. An enemy has '+ str(hp[enemyturn - 1]) + ' hp left.')
-                if turn % 2 == 0:
-                    turn -= 1
-                else:
-                    turn += 1
+                hp[enemyturn-1] -= push
+                print(str(players[turn-1])+' is attacking the enemy with a power of '+str(push)+'. An enemy has '+ str(hp[enemyturn-1]) + ' hp left.')
             else:
                 print('Attack was not succeeded!')
-                if turn % 2 == 0:
-                    turn -= 1
-                else:
-                    turn += 1
-        elif (version == 2 and turn == 2):
+            turn = enemyturn
+        elif computer_is_playing_easily(version, turn):
             x = [int(i) for i in range (len(f))]
             push = random.choice(f[random.choice(x)])
             if push !=0:
                 hp[enemyturn - 1] -= push
-                print('The computer attacks you with a power of '+ str(push) + ' . You have '+str(hp[enemyturn-1])+' hp left.')
-                if turn % 2 == 0:
-                    turn -= 1
-                else:
-                    turn += 1
+                print('The computer attacks you with a power of '+ str(push) + ' . You have ' + str(hp[enemyturn-1]) + ' hp left.')
             else:
                 print('Attack was not succeeded!')
-                if turn % 2 == 0:
-                    turn -= 1
-                else:
-                    turn += 1
-        elif (version == 3 and turn == 2):
-            if hp[turn - 1]-hp[turn - 2]>=20 or hp[turn - 1]>=25:
-                e = random.choice([int(i) for i in range(4,8)])
-                push = random.choice(f[e]) 
-            elif hp[turn-1]<25 and hp[turn-1]>=10:
-                e = random.choice([int(i) for i in range(8,10)])
-                push = random.choice(f[e])
-            elif hp[turn-1]<10:
-                e = random.choice([int(i) for i in range(1,4)])
-                push = random.choice(f[e])
+            turn = enemyturn
+        elif computer_is_playing_hardly:
+            push = computer_has_a_strategy(2)
             if push !=0:
                     hp[enemyturn - 1] -= push
-                    print('The computer attacks you with a power of '+ str(push)+' . You have '+str(hp[enemyturn-1])+' hp left.')
-                    if turn % 2 == 0:
-                        turn -= 1
-                    else:
-                        turn += 1
+                    print('The computer attacks you with a power of ' + str(push) + ' . You have ' + str(hp[enemyturn-1]) + ' hp left.')
             else:
                 print('Attack was not succeeded!')
-                if turn % 2 == 0:
-                    turn -= 1
-                else:
-                    turn += 1    
-        if hp[turn - 1]<= 0:
-            print('What a game! '+ str(players[enemyturn - 1])+ ' loses!')
+            turn = enemyturn    
+        if hp[turn-1]<= 0:
+            print('What a game! '+ str(players[enemyturn-1])+ ' loses!')
             playing = False
-        elif hp[enemyturn - 1] <= 0:
-            print('What a game! '+ str(players[turn - 1])+ ' loses!')
+        elif hp[enemyturn-1] <= 0:
+            print('What a game! '+ str(players[turn-1])+ ' loses!')
             playing = False
 process(1)
