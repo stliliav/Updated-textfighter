@@ -79,14 +79,11 @@ print('2 - an easy game with a computer')
 print('3 - a complicated game with a computer')
 version = int(input('So, what is your choice?\n'))
 players=[]
-if version == 1:
-    name1 = input('Input the name of the first player:\n')
-    name2 = input('Input the name of the second player:\n')
-    players.append(name1)
-    players.append(name2)
+if version == 1: 
+    players.append(input('Input the name of the first player:\n'))
+    players.append(input('Input the name of the second player:\n'))
 else:    
-    name = input('Input your name:\n')
-    players.append(name)
+    players.append(input('Input your name:\n'))
     players.append('Computer')
 hp=[50, 50]
 process(1)
