@@ -31,30 +31,29 @@ def pickforce(players,turn):
     push = random.choice(push_probability_list_generator(pickforce))
     return push
 
-def human_steps(version, players, turn, enemyturn):
-    push = pickforce(players,turn)
-    if push!=0:
-        hp[enemyturn-1] -= push
-        print(str(players[turn-1])+' is attacking the enemy with a power of '+str(push)+'. An enemy has '+ str(hp[enemyturn-1]) + ' hp left.')
-    else:
-        print('Attack was not succeeded!')
-        
-def dummy_comp_steps(hp, enemyturn):
-    x = random.choice([int(i) for i in range (1,10)])
-    push = random.choice(push_probability_list_generator(x))
+def success_of_computers_attack(push, enemyturn, hp):
     if push !=0:
         hp[enemyturn - 1] -= push
         print('The computer attacks you with a power of '+ str(push) + ' . You have ' + str(hp[enemyturn-1]) + ' hp left.')
     else:
         print('Attack was not succeeded!')
 
-def intelligent_comp_steps(push, hp, enemyturn):
-    if push !=0:
-        hp[enemyturn - 1] -= push
-        print('The computer attacks you with a power of ' + str(push) + ' . You have ' + str(hp[enemyturn-1]) + ' hp left.')
+def human_steps(version, players, turn, enemyturn):
+    push = pickforce(players,turn)
+    if push!=0:
+        hp[enemyturn-1] -= push
+        print(str(players[turn-1])+' is attacking the enemy with a power of '+str(push)+'. An enemy has '+ str(hp[enemyturn-1]) + ' hp left.')
     else:
-        print('Attack was not succeeded!')
-       
+        print('Attack was not succeeded!')  
+            
+def dummy_comp_steps(hp, enemyturn):
+    x = random.choice([int(i) for i in range (1,10)])
+    push = random.choice(push_probability_list_generator(x))
+    success_of_computers_attack(push, enemyturn, hp)
+
+def intelligent_comp_steps(push, hp, enemyturn):
+    success_of_computers_attack(push, enemyturn, hp)
+
 def process(turn):
     playing = True
     while playing:
@@ -62,7 +61,6 @@ def process(turn):
             enemyturn = 1
         else:
             enemyturn = 2
-
         if person_is_playing(version, turn):
             human_steps(version, players, turn, enemyturn)
 
@@ -73,7 +71,6 @@ def process(turn):
             push = computers_strategical_push(2)
             intelligent_comp_steps(push, hp, enemyturn)
         turn = enemyturn   
-
         if hp[turn-1]<= 0:
             print('What a game! '+ str(players[enemyturn-1])+ ' loses!')
             playing = False
