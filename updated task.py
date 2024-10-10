@@ -63,7 +63,7 @@ def process(turn):
             human_steps(version, players, turn, enemyturn)
         elif computer_is_playing_easily(version, turn):
             dummy_comp_steps(hp, enemyturn)
-        elif computer_is_playing_hardly:
+        elif computer_is_playing_hardly(version, turn):
             push = computers_strategical_push(2)
             intelligent_comp_steps(push, hp, enemyturn)
         turn = enemyturn    
