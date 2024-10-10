@@ -8,7 +8,7 @@ def computer_is_playing_easily(version, turn):
 def computer_is_playing_hardly(version, turn):
     return (version == 3 and turn == 2)
 
-def computers_strategical_push(turn):
+def computers_strategical_push(hp,turn):
     push = 0
     if hp[turn - 2] > 10:
         e = random.choice([int(i) for i in range(4,7)])
@@ -38,14 +38,14 @@ def success_of_computers_attack(push, enemyturn, hp):
     else:
         print('Attack was not succeeded!')
 
-def human_steps(version, players, turn, enemyturn):
+def human_steps(version, players, turn, enemyturn, hp):
     push = pickforce(players,turn)
     if push!=0:
         hp[enemyturn-1] -= push
         print(str(players[turn-1])+' is attacking the enemy with a power of '+str(push)+'. An enemy has '+ str(hp[enemyturn-1]) + ' hp left.')
     else:
         print('Attack was not succeeded!')  
-            
+
 def dummy_comp_steps(hp, enemyturn):
     x = random.choice([int(i) for i in range (1,10)])
     push = random.choice(push_probability_list_generator(x))
@@ -62,13 +62,13 @@ def process(turn):
         else:
             enemyturn = 2
         if person_is_playing(version, turn):
-            human_steps(version, players, turn, enemyturn)
+            human_steps(version, players, turn, enemyturn, hp)
 
         elif computer_is_playing_easily(version, turn):
             dummy_comp_steps(hp, enemyturn)
 
         elif computer_is_playing_hardly(version, turn):
-            push = computers_strategical_push(2)
+            push = computers_strategical_push(hp,turn)
             intelligent_comp_steps(push, hp, enemyturn)
         turn = enemyturn   
         if hp[turn-1]<= 0:
