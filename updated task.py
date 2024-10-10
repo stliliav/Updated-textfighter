@@ -24,7 +24,10 @@ def push_probability_list_generator(pickforce):
 
 def pickforce(players,turn):
     phrase = str(players[turn-1]) + ', choose the force to attack! It may be an integer from 1 to 9.\n'
-    pickforce = int(input(phrase))
+    try:
+        pickforce = int(input(phrase))
+    except ValueError:
+        pickforce = int(input('This value should be an integer! Try again.\n'))
     push = random.choice(push_probability_list_generator(pickforce))
     return push
 
@@ -59,14 +62,18 @@ def process(turn):
             enemyturn = 1
         else:
             enemyturn = 2
+
         if person_is_playing(version, turn):
             human_steps(version, players, turn, enemyturn)
+
         elif computer_is_playing_easily(version, turn):
             dummy_comp_steps(hp, enemyturn)
+
         elif computer_is_playing_hardly(version, turn):
             push = computers_strategical_push(2)
             intelligent_comp_steps(push, hp, enemyturn)
-        turn = enemyturn    
+        turn = enemyturn   
+
         if hp[turn-1]<= 0:
             print('What a game! '+ str(players[enemyturn-1])+ ' loses!')
             playing = False
