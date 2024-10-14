@@ -18,7 +18,7 @@ def computers_strategical_push(hp,turn):
     return push
 
 def push_probability_list_generator(pickforce):
-    probability = (100 - (pickforce * 10 - 10))//10
+    probability = (10 - (pickforce - 1))
     f = [pickforce]*probability + [0]*(10 - probability)
     return f   
 
