@@ -24,10 +24,11 @@ def push_probability_list_generator(pickforce):
 
 def pickforce(players,turn):
     phrase = str(players[turn-1]) + ', choose the force to attack! It may be an integer from 1 to 9.\n'
-    try:
-        pickforce = int(input(phrase))
-    except ValueError:
-        pickforce = int(input('This value should be an integer! Try again.\n'))
+    needed_value_of_force = [str(i) for i in range (1,10)]
+    force = input(phrase)
+    while not(force in needed_value_of_force):
+        force = (input('This value should be an integer! Try again.\n'))
+    pickforce = int(force)
     push = random.choice(push_probability_list_generator(pickforce))
     return push
 
